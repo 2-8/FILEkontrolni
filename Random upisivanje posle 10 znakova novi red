@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <iostream>
+#include <math.h>
+#include <string.h>
+#include <ctype.h>
+
+using namespace std;
+
+int main()
+{
+    int br=0;
+ char znak;
+	FILE *f1 = fopen("Nova.txt", "w");
+	printf("\nTekst za upis u dat  je>\n");
+	while ((znak = getchar()) != EOF)
+	if(br==10)
+	{
+		fprintf(f1,"\n");
+		br=0;
+    }
+		else 
+        {
+             putc(znak, f1);
+             br++;
+             }
+	fclose(f1);
+
+	system("Pause");	
+}
