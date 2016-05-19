@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+
+using namespace std;
+
+
+void f1(char *s, char *pom)
+{
+	char prezime[50], ime[50], srime[50];
+	int p = strchr(s, '(') - s;
+	strncpy(ime, s, p);
+	ime[p] = '\0';
+	int p1 = strrchr(s, ')') - s;
+	strcpy(prezime, s + p1 + 1);
+	int p2 = strchr(s, '(') - s;
+	strncpy(srime, s + p2 + 1, 1);
+	srime[1] = '\0';
+	strcat(ime, srime);
+	strcat(ime, ".");
+	strcat(ime, prezime);
+	strcpy(pom, ime);
+}
+
+void f2(char *s, char *pom)
+{
+     char novoime[50];
+     int p=strchr(s,'.')-s;
+     strcpy(novoime,s+p+1);;
+     strcpy(pom,novoime);
+     }
+
+void f3(char s[][50], int n)
+{
+     int i,k;
+     char s1[50];
+     for(i=0;i<n-1;i++)
+		for(k=i+1;k<n;k++)
+		{
+			if(strcmp(s[i],s[k])>0)
+			{
+				strcpy(s1,s[i]);
+				strcpy(s[i],s[k]);
+				strcpy(s[k],s1);
+			}
+
+     }
+}
+int main(int argc, char *argv[])
+{
+FILE *fd = fopen("srime.txt", "r");
+	char s[50], sn[50],sp[50],a[10][50];
+	int i=0;
+	while (fgets(s, 50, fd))
+	{
+		s[strlen(s)-1]=’\0’;
+		f1(s, sn);
+		cout << "\nIzlaz: " << sn << endl;
+		f2(sn,sp);
+		strcpy(a[i],sp);
+		i++;
+		cout<<"\nIzlaz: "<<sp<<endl;
+	}
+	f3(a,i);
+	for(int p=0;p<i;p++)
+	puts(a[p]);
+	fclose(fd);
+
+    system("PAUSE");
+    return EXIT_SUCCESS;
+}
