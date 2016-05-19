@@ -1,0 +1,53 @@
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+
+using namespace std;
+
+
+char *godinanapocetak(char *s)
+{
+     char s1[50],s2[50],s3[50];
+     int i=0,k=0,p=0;
+     k=strrchr(s,' ')-s;
+     strncpy(s1,s,k-1);
+     s1[k-1]='\0';
+     strcpy(s2,s+k+1);
+     strcat(s2,", ");
+     strcpy(s3,s2);
+     strcat(s3,s1);
+     return s3;
+    }
+
+int main(int argc, char *argv[])
+{
+	FILE *f1=fopen("Unos.txt", "r");
+	char s[10][50], pom[50], s1[50];
+	int i=0;
+	while(fgets(s1,50,f1))
+	{
+		s1[strlen(s1)-1]=’\0’;
+		strcpy(pom,godinanapocetak(s1));
+		strcpy(s[i],pom);
+			i++;
+	}
+	for(i=0;i<4;i++)
+		for(int j=0;j<4;j++)
+		{
+			if(strcmp(s[i],s[j])>0)
+			{
+				strcpy(s1,s[i]);
+				strcpy(s[i],s[j]);
+				strcpy(s[j],s1);
+			}
+		}
+	for(i=0;i<4;i++)
+		cout<<"Izlaz "<<s[i]<<endl;
+	fclose(f1);
+
+    system("PAUSE");
+    return EXIT_SUCCESS;
+}
