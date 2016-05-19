@@ -1,0 +1,22 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
+#include <stdio.h>
+#include <iomanip>
+#include <iostream>
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+
+using namespace std;
+
+int main() {
+	FILE *fp=fopen("Unos.txt", "w");
+	char znak[80];
+	cout<<"Unesi tekst"<<endl;
+	while(gets(znak)!=NULL)
+		fprintf(fp, "%s\n", znak);
+	fclose(fp);
+  system("pause");
+}
