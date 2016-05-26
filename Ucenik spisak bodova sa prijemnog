@@ -1,0 +1,130 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#include <cstdlib>
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <iomanip>
+#include <math.h>
+
+using namespace std;
+
+void f1(void)
+{
+	FILE *f1=fopen("Ulaz.txt","w");
+	char s[80];
+	cout<<"Spisak\n";
+	while(gets(s))
+		{
+			fputs(s,f1);
+			fprintf(f1,"\n");
+	}
+	fclose(f1);
+}
+
+void f2(void)
+{
+	FILE *f1=fopen("Izlaz.txt", "r");
+	char s[80];
+	while(fgets(s,80,f1))
+	{
+		s[strlen(s)-1]='\0';
+		cout<<"Ucenik: "<<s<<endl;
+	}
+	fclose(f1);
+}
+
+void f3(void)
+{
+	FILE *f1=fopen("Ulaz.txt", "r");
+	FILE *f2=fopen("Faza 1.txt", "w");
+	float bod;
+	char s[80];
+	while(fgets(s,80,f1))
+	{
+		s[strlen(s)-1]='\0';
+		cout<<"Ucenik "<<s<<endl<<"Bodovi(osnovna)?"<<endl;
+		cin>> bod;
+		fprintf(f2,"%s %.2f\n",s,bod);
+	}
+	fclose(f2);
+	fclose(f1);
+}
+
+void f4(void)
+{
+	FILE *f1=fopen("Ulaz.txt","r");
+	FILE *f2=fopen("Faza 1.txt", "r");
+	FILE *f3=fopen("Izlaz.txt", "w");
+	float bs,bm,bk,z=0,bo;
+	char s[80],p[80],k[10];
+	int j;
+	while(fgets(s,80,f1))
+	{
+		s[strlen(s)-1]='\0';
+		cout<<"Ucenik "<<s<<endl<<"Bodovi(srp,mat,komb)?"<<endl;
+		cin>>bs>>bm>>bk;
+		fgets(p,80,f2);
+		j=strrchr(p,' ')-p;
+		strcpy(k,p+j+1);
+		bo=atof(k);
+		cout<<"Osnovna "<<bo<<endl;
+		z+=bs+bm+bk+bo;
+		cout<<"Zbir "<<z<<endl;
+		fprintf(f3,"%s %.2f %.2f %.2f %.2f %.2f\n", s,bo,bs,bm,bk,z);
+		z=0;
+	}
+	fclose(f3);
+	fclose(f2);
+	fclose(f1);
+}
+
+
+void f5(char s[][50], int n)
+{
+	int i, k;
+	for (i = 0; i < n - 1; i++)
+		for (k = i + 1; k < n; k++)
+			if (strcmp(strrchr(s[i],' ') , strrchr(s[k],' ')) < 0)
+			{
+		char pom[50];
+		strcpy(pom, s[i]);
+		strcpy(s[i], s[k]);
+		strcpy(s[k], pom);
+			}
+
+}
+void f6(void)
+{
+	FILE *f1=fopen("Izlaz.txt", "r");
+	int i=0, br = 0;
+	char s[50],a[10][50];
+	while (fgets(s, 50, f1))
+		br++;
+	fclose(f1);
+	f1 = fopen("Izlaz.txt", "r");
+	while (fgets(s, 50, f1))
+	{
+		s[strlen(s) - 1] = '\0';
+		strcpy(a[i], s);
+		i++;
+	}
+	f5(a,br);
+	printf("Posle sortiranja izgleda ovako: \n");
+	for (i = 0; i<br; i++)
+		printf("%s\n", a[i]);
+	fclose(f1);
+}
+
+void main()
+{
+	f1();
+	f3();
+	f4();
+	f2();
+	f6();
+	
+	system("PAUSE");
+}
