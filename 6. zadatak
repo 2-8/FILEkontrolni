@@ -1,0 +1,71 @@
+#include <cstdlib>
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <iomanip>
+#include <math.h>
+
+using namespace std;
+
+void f1(char *s, char *novo)
+{
+     int p1,p2;
+     char s1[50],s2[50];
+     p1=strchr(s,'I')-s;
+     p2=strrchr(s,' ')-s;
+     strncpy(s1,s,p1-1);
+     s1[p1-1]='\0';
+     strcpy(s2,s+p2+1);
+     strcat(s2," ");
+	 strcat(s2,s1);
+     strcpy(novo,s2);
+     }
+
+void f2(char *s, char *novo)
+{
+     char s1[50];
+     strcat(s1,"0");
+     strcat(s1,s);
+     strcpy(novo,s1);
+     }
+     
+void f3(char s[][50], int n)
+{
+     int i,k;
+     char s1[50];
+     for(i=0;i<n-1;i++)
+     for(k=i+1;k<n;k++)
+     {
+                       if(strcmp(s[i],s[k])>0)
+                       {
+                                              strcpy(s1,s[i]);
+                                              strcpy(s[i],s[k]);
+                                              strcpy(s[k],s1);
+                                              }
+                       }
+     }
+
+
+int main()
+{
+    FILE *fp=fopen("Lekari.txt", "r");
+    char a[10][50],s[50],s1[50],s2[50];
+    int i=0,p=0;
+    while(fgets(s,50,fp))
+    {
+		s[strlen(s)-1]='\0';
+                         f1(s,s1);
+                         cout<<"\nIzlaz:"<<s1<<endl;
+                         f2(s1,s2);
+                         strcpy(a[i],s2);
+                         i++;
+                         }
+    f3(a,i);
+    for(p=0;p<i;p++)
+    puts(a[p]);
+    fclose(fp);
+    
+    
+    system("PAUSE");
+}
