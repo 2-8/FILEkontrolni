@@ -1,3 +1,7 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+
 #include <cstdlib>
 #include <iostream>
 #include <stdlib.h>
@@ -17,7 +21,7 @@ void f1(char *s, char *novo)
      strncpy(s1,s,p1-1);
      s1[p1-1]='\0';
      strcpy(s2,s+p2+1);
-     strcat(s2," ");
+     strcat(s2, " ");
 	 strcat(s2,s1);
      strcpy(novo,s2);
      }
@@ -25,11 +29,22 @@ void f1(char *s, char *novo)
 void f2(char *s, char *novo)
 {
      char s1[50];
-     strcat(s1,"0");
+     strcpy(s1,"0");
+     s1[1]='\0';
      strcat(s1,s);
      strcpy(novo,s1);
      }
      
+int f4(char *s)
+{
+	int p=strchr(s,' ')-s;
+	char a[10];
+	strncpy(a,s,p);
+	a[p]='\0';
+	if(strlen(a)<5)
+	return 1;
+	else return 0;
+}
 void f3(char s[][50], int n)
 {
      int i,k;
@@ -47,7 +62,7 @@ void f3(char s[][50], int n)
      }
 
 
-int main()
+void main()
 {
     FILE *fp=fopen("Lekari.txt", "r");
     char a[10][50],s[50],s1[50],s2[50];
@@ -57,9 +72,16 @@ int main()
 		s[strlen(s)-1]='\0';
                          f1(s,s1);
                          cout<<"\nIzlaz:"<<s1<<endl;
-                         f2(s1,s2);
-                         strcpy(a[i],s2);
-                         i++;
+						 if(f4(s1)==1)
+						 {
+                                      f2(s1,s2);
+                                      strcpy(a[i],s2);
+                                      i++;
+                                      }
+						 else if(f4(s1)==0)
+                         {
+                             strcpy(a[i],s1);
+                             i++;}
                          }
     f3(a,i);
     for(p=0;p<i;p++)
