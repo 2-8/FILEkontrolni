@@ -1,0 +1,141 @@
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
+#include <cstdlib>
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <iomanip>
+#include <math.h>
+
+using namespace std;
+
+void f1(void)
+{
+	FILE *f1=fopen("Ulaz.txt","w");
+	char s[80];
+	cout<<"Unesi spisak (Prezimwe Ime):\n";
+	while(gets(s))
+		{
+			fputs(s,f1);
+			fprintf(f1,"\n");
+	}
+	fclose(f1);
+}
+
+void f2(void)
+{
+	FILE *f1=fopen("Izlaz.txt", "r");
+	char s[80];
+	while(fgets(s,80,f1))
+	{
+		s[strlen(s)-1]='\0';
+		cout<<"Student: "<<s<<endl;
+	}
+	fclose(f1);
+}
+
+	void f7(char s[][80], int n)
+{
+     int i,k;
+     char s1[80];
+     for(i=0;i<n-1;i++)
+     for(k=i+1;k<n;k++)
+     {
+                       if(strcmp(s[i],s[k])>0)
+                       {
+                                              strcpy(s1,s[i]);
+                                              strcpy(s[i],s[k]);
+                                              strcpy(s[k],s1);
+                                              }
+                       }
+     }
+
+void f3(void)
+{
+	FILE *f1=fopen("Ulaz.txt", "r");
+	FILE *f2=fopen("Prijava.txt", "w");
+	int br,god,i=0;
+	char s[80],p[10],k[5],a[10][80];
+	while(fgets(s,80,f1))
+	{
+		s[strlen(s)-1]='\0';
+		cout<<"Studentu: "<<s<<endl<<"Dodeljujemo index i god upisa\n"<<endl;
+		br=rand()%900+100;
+		god=rand()%7+10;
+		strcat(s, " ");
+		_itoa(br,p,10);
+		cout<<"Index:"<<p<<endl;
+		strcat(s,p);
+		strcat(s, "/");
+		_itoa(god,k,10);
+		cout<<"God upisa:"<<k<<endl;
+		strcat(s,k);
+		strcpy(a[i],s);
+		i++;
+	}
+	f7(a,i);
+	for(int k=0;k<i;k++)
+	fprintf(f2,"%s\n",a[k]);
+	fclose(f2);
+	fclose(f1);
+}
+
+void f5(char s[][80], int n, int b[])
+{
+	int i, k;
+	for (i = 0; i < n; i++)
+		if(b[i]<b[i+1])
+			{
+		char pom[80];
+		strcpy(pom, s[i]);
+		strcpy(s[i], s[i+1]);
+		strcpy(s[i+1], pom);
+			}
+
+}
+
+int f4(int b[])
+{
+	FILE *f1=fopen("Ulaz.txt","r");
+	FILE *f2=fopen("Prijava.txt", "r");
+	FILE *f3=fopen("Izlaz.txt", "w");
+	int o,i=0;
+	char s[80],a[10][80],k[10];
+	while(fgets(s,80,f2))
+	{
+		s[strlen(s)-1]='\0';
+		cout<<"Student: "<<s<<endl<<"Dodajemo ocenu "<<endl;
+		o=rand()%6+5;
+		cout<<"Ocena: "<<o<<endl;
+		b[i]=o;
+		_itoa(o,k,10);
+		strcat(s," ");
+		strcat(s,k);
+		strcpy(a[i],s);
+		i++;
+		o=0;
+	}
+	f5(a,i,b);
+	for(int j=0;j<i;j++)
+	fprintf(f3,"%s\n", a[j]);
+	fclose(f3);
+	fclose(f2);
+	fclose(f1);
+	return i;
+}
+
+void main()
+{
+	int b[10],i=0,k,j=0;
+	f1();
+	f3();
+	k=f4(b);
+	f2();
+	for(i=0;i<k;i++)
+		if(b[i]>5)
+			j++;
+	cout<<"Prag prolaznosti je "<<j*100/k<<"%";
+	system("PAUSE");
+}
